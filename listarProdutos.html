@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Listar Produtos</title>
+</head>
+<body>
+  <h1>Produtos</h1>
+  <ul id="lista-produtos"></ul>
+
+  <script>
+    // URL da sua API (ajuste conforme sua porta e rota)
+    const apiUrl = "http://localhost:5098/api/Consulta/ListarProdutos";
+
+        debugger;
+    fetch(apiUrl)
+      .then(response => {
+        debugger;
+        if (!response.ok) {
+          throw new Error("Error ao chamar API: " + response.status);
+        }
+        return response.json();
+      })
+      .then(response => {
+        debugger;
+        const lista = document.getElementById("lista-produtos");
+        response.produtos.forEach(p => {
+          const item = document.createElement("li");
+          item.textContent = `ID: ${p.idProduto} | Nome: ${p.nome} | Preço: R$ ${p.preco}`;
+          lista.appendChild(item);
+        });
+      })
+      .catch(error => {
+        console.error("Erro ao consumir API:", error);
+        alert("Erroooo ao buscar produtos: " + error.message);
+      });
+  </script>
+</body>
+</html>
